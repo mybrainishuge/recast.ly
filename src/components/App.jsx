@@ -3,21 +3,55 @@ class App extends React.Component {
     super(props);
     this.state = {
       currentVideo: exampleVideoData[0],
-      videoList: exampleVideoData
+      videoList: exampleVideoData,
+      options: {
+        key: window.YOUTUBE_API_KEY,
+        query: '',
+        max: 5        
+      }
     };
   } 
+
+  componentDidMount() {
+    var options = this.state.options;
+    window.searchYouTube(options, function(data) {
+      // this.setState({
+      //   options: {
+      //     key: window.YOUTUBE_API_KEY,
+      //     query: data,
+      //     max: 5
+      //   }
+      // });
+      console.log('inside componentDidMount', data);
+    });
+  }
 
   handleVideoClick(video) {
     this.setState({
       currentVideo: video
-      // videoList: 
+    });
+  }
+
+  filterResults(word) {
+    this.setState({
+      options: {
+        key: window.YOUTUBE_API_KEY,
+        query: word,
+        max: 5
+      }
+    });
+    window.searchYouTube(this.state.options, function(data) {
+      console.log('We have results: ', data);
+      this.setState({
+        currentVideo: data
+      });
     });
   }
 
   render() {
     return (
       <div>
-        <Nav />
+        <Nav nav={(word) => this.filterResults(word)} />
         <div className="col-md-7">
           <VideoPlayer video={this.state.currentVideo} />
         </div>
