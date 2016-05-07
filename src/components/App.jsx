@@ -1,5 +1,6 @@
-class App extends React.Components {
+class App extends React.Component {
   constructor(props) {
+    super();
     this.state = {
       currentVideo: props.data[0]
       // videoList: props.data
@@ -8,10 +9,9 @@ class App extends React.Components {
 
   handleVideoClick(video) {
     this.setState({
-      currentVideo: props.data[1]
+      currentVideo: video
       // videoList: 
     });
-    this.render();
   }
 
   render() {
@@ -22,7 +22,7 @@ class App extends React.Components {
           <VideoPlayer video={this.state.currentVideo}/>
         </div>
         <div className="col-md-5">
-          <VideoList videos={props.data} click={this.handleVideoClick.bind(this)}/>
+          <VideoList videos={this.props.data} click={this.handleVideoClick.bind(this)}/>
         </div>
       </div>
     );
