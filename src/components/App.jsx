@@ -1,9 +1,9 @@
 class App extends React.Component {
   constructor(props) {
-    super();
+    super(props);
     this.state = {
-      currentVideo: props.data[0]
-      // videoList: props.data
+      currentVideo: exampleVideoData[0],
+      videoList: exampleVideoData
     };
   } 
 
@@ -22,7 +22,7 @@ class App extends React.Component {
           <VideoPlayer video={this.state.currentVideo} />
         </div>
         <div className="col-md-5">
-          <VideoList videos={this.props.data} click={(video) => this.handleVideoClick(video)} />
+          <VideoList videos={this.state.videoList} click={(video) => this.handleVideoClick(video)} />
         </div>
       </div>
     );
