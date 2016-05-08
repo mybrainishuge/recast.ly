@@ -35,7 +35,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Nav nav={(word) => this.filterResults(word)} />
+        <Nav nav={_.debounce((word) => this.filterResults(word), 500)} />
         <div className="col-md-7">
           <VideoPlayer video={this.state.currentVideo} />
         </div>
