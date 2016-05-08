@@ -2,28 +2,13 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentVideo: exampleVideoData[0],
-      videoList: exampleVideoData,
-      options: {
-        key: window.YOUTUBE_API_KEY,
-        query: '',
-        max: 5        
-      }
+      currentVideo: null,
+      videoList: []
     };
   } 
 
   componentDidMount() {
-    var options = this.state.options;
-    window.searchYouTube(options, function(data) {
-      // this.setState({
-      //   options: {
-      //     key: window.YOUTUBE_API_KEY,
-      //     query: data,
-      //     max: 5
-      //   }
-      // });
-      console.log('inside componentDidMount', data);
-    });
+    this.filterResults('cats');
   }
 
   handleVideoClick(video) {
@@ -33,17 +18,16 @@ class App extends React.Component {
   }
 
   filterResults(word) {
-    this.setState({
-      options: {
-        key: window.YOUTUBE_API_KEY,
-        query: word,
-        max: 5
-      }
-    });
-    window.searchYouTube(this.state.options, function(data) {
-      console.log('We have results: ', data);
+    var options = {
+      key: YOUTUBE_API_KEY,
+      query: word,
+      max: 5
+    };
+
+    searchYouTube(options, videos => {
       this.setState({
-        currentVideo: data
+        currentVideo: videos[0],
+        videoList: videos
       });
     });
   }
